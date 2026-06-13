@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BHASHMA — Offensive Security</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,300;0,400;0,700;0,800;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #050505;
+  --white: #f0ede8;
+  --green: #c8f542;
+  --green-dark: #8ab82e;
+  --dim: #2a2a2a;
+  --muted: #555;
+  --subtle: #333;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── EDIT STRIP ── */
+#edit-strip {
+  background: var(--green);
+  color: #000;
+  text-align: center;
+  padding: 7px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── NAV ── */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 48px;
+  height: 60px;
+  border-bottom: 1px solid var(--dim);
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background: rgba(5,5,5,0.96);
+  backdrop-filter: blur(12px);
+}
+
+.logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--green);
+}
+
+.nav-right {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-right a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.15s;
+}
+.nav-right a:hover { color: var(--green); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 0 48px 48px;
+  border-bottom: 1px solid var(--dim);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  padding-top: 80px;
+  gap: 0;
+}
+
+.hero-left { padding-bottom: 0; }
+
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--green);
+}
+
+h1 {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: clamp(64px, 10vw, 128px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 0;
+}
+
+h1 .accent { color: var(--green); display: block; }
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 8px;
+  padding-left: 40px;
+  border-left: 1px solid var(--dim);
+}
+
+.hero-bio {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #999;
+  margin-bottom: 32px;
+  max-width: 380px;
+}
+
+.hero-bio strong { color: var(--white); font-weight: 500; }
+
+.hero-certs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.cert-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+}
+
+.cert-pill .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cert-pill span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #777;
+  letter-spacing: 0.06em;
+}
+
+.cert-pill a { color: var(--green-dark); text-decoration: underline; text-underline-offset: 3px; font-size: 10px; margin-left: 4px; }
+
+.hero-actions { display: flex; gap: 12px; }
+
+.btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border: 1px solid var(--dim);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-block;
+}
+
+.btn-primary { background: var(--green); color: #000; border-color: var(--green); }
+.btn-primary:hover { background: var(--white); border-color: var(--white); }
+.btn-ghost { background: transparent; color: var(--muted); }
+.btn-ghost:hover { border-color: var(--white); color: var(--white); }
+
+/* scrolling ticker */
+.ticker {
+  border-top: 1px solid var(--dim);
+  padding: 14px 0;
+  overflow: hidden;
+  position: relative;
+  margin-top: 48px;
+}
+.ticker-track {
+  display: flex;
+  gap: 0;
+  animation: scroll-left 28s linear infinite;
+  width: max-content;
+}
+.ticker-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0 32px;
+  white-space: nowrap;
+}
+.ticker-item .sep { color: var(--green); margin: 0 8px; }
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── SECTION CHROME ── */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 56px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--dim);
+}
+
+section { padding: 80px 48px; border-bottom: 1px solid var(--dim); }
+
+h2 {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0;
+}
+
+/* ── OPS LOG (WRITEUPS) ── */
+#writeups h2 { margin-bottom: 64px; }
+
+.ops-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ops-table thead tr {
+  border-bottom: 1px solid var(--dim);
+}
+
+.ops-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 0 12px;
+  text-align: left;
+  font-weight: 400;
+}
+
+.ops-table th:last-child { text-align: right; }
+
+.ops-row {
+  border-bottom: 1px solid var(--dim);
+  transition: background 0.12s;
+  cursor: pointer;
+}
+
+.ops-row:hover { background: rgba(200,245,66,0.04); }
+
+.ops-row td {
+  padding: 18px 0;
+  vertical-align: middle;
+}
+
+.ops-row td:first-child { width: 56px; }
+.ops-row td:last-child { text-align: right; }
+
+.ops-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.ops-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+.ops-desc {
+  font-size: 13px;
+  color: #666;
+  margin-top: 3px;
+  font-weight: 300;
+}
+
+.ops-platform {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 3px 10px;
+  border: 1px solid var(--dim);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.ops-platform.pro { border-color: #3a2a00; color: #c8860a; }
+.ops-platform.vl { border-color: #1a0000; color: #c03030; }
+.ops-platform.htb { border-color: #0a2a0a; color: var(--green-dark); }
+.ops-platform.ref { border-color: #1a1a2a; color: #7a7aff; }
+
+.ops-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.tag::before { content: '#'; color: var(--green-dark); }
+
+/* ── EXPLOIT DEV ── */
+#exploit {
+  background: var(--black);
+}
+
+.exploit-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 64px;
+  align-items: end;
+}
+
+.exploit-intro {
+  font-weight: 300;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.8;
+  padding-top: 16px;
+  border-top: 1px solid var(--dim);
+}
+
+.exploit-intro a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+
+.exploit-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--dim);
+  border: 1px solid var(--dim);
+}
+
+.exploit-card {
+  background: var(--black);
+  padding: 32px;
+  display: block;
+  transition: background 0.15s;
+  position: relative;
+}
+
+.exploit-card:hover { background: #0d0d0d; }
+
+.exploit-card:hover .ec-arrow { opacity: 1; transform: translate(0,0); }
+
+.ec-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 20px;
+  letter-spacing: 0.1em;
+}
+
+.ec-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.ec-version {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.ec-desc {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: 24px;
+}
+
+.ec-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border: 1px solid var(--dim);
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.chip.red { border-color: #3a0000; color: #c03030; }
+.chip.amber { border-color: #3a2200; color: #c8860a; }
+
+.ec-arrow {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  font-size: 18px;
+  color: var(--green);
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition: all 0.2s;
+}
+
+/* ── SKILLS ── */
+#skills { background: var(--black); }
+
+.skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  margin-top: 64px;
+}
+
+.skills-context {
+  font-weight: 300;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.skills-context p + p { margin-top: 16px; }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 48px;
+}
+
+.skill-group { }
+
+.sg-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--dim);
+}
+
+.sg-items { list-style: none; }
+
+.sg-items li {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #666;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--dim);
+  letter-spacing: 0.03em;
+  transition: color 0.12s;
+}
+
+.sg-items li:hover { color: var(--white); }
+.sg-items li:last-child { border-bottom: none; }
+
+/* ── PROFILES ── */
+#profiles { background: var(--black); }
+
+.profiles-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--dim);
+  border: 1px solid var(--dim);
+  margin-top: 64px;
+}
+
+.profile-card {
+  background: var(--black);
+  padding: 32px 28px;
+  display: block;
+  transition: background 0.15s;
+}
+
+.profile-card:hover { background: #0d0d0d; }
+
+.pc-platform {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.pc-handle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.pc-sub {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.5;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.pc-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--green-dark);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── CONTACT ── */
+#contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding: 0;
+  border-bottom: none;
+  min-height: 50vh;
+}
+
+.contact-left {
+  padding: 80px 48px;
+  border-right: 1px solid var(--dim);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contact-cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  margin-bottom: 32px;
+}
+
+.contact-cta .g { color: var(--green); }
+
+.contact-sub {
+  font-size: 14px;
+  color: #555;
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 360px;
+  margin-bottom: 40px;
+}
+
+.contact-email {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  color: var(--white);
+  border-bottom: 1px solid var(--dim);
+  padding-bottom: 12px;
+  transition: color 0.15s, border-color 0.15s;
+  display: inline-block;
+}
+.contact-email:hover { color: var(--green); border-color: var(--green); }
+
+.contact-right {
+  padding: 80px 48px;
+  background: #080808;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact-links { display: flex; flex-direction: column; gap: 20px; }
+
+.contact-link-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--dim);
+  transition: all 0.15s;
+}
+
+.contact-link-row:hover .clr-arrow { color: var(--green); transform: translate(3px,-3px); }
+
+.clr-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--white);
+  letter-spacing: 0.04em;
+}
+
+.clr-sub {
+  font-size: 12px;
+  color: #555;
+  margin-top: 2px;
+  font-weight: 300;
+}
+
+.clr-arrow {
+  font-size: 18px;
+  color: var(--muted);
+  transition: all 0.15s;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 24px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--dim);
+}
+
+.footer-copy {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.footer-loc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ── EDITABLE ── */
+[contenteditable="true"]:focus {
+  outline: 1px dashed rgba(200,245,66,0.4);
+  outline-offset: 3px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-right { display: none; }
+  section { padding: 60px 24px; }
+  .hero { padding: 0 24px 40px; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-right { border-left: none; border-top: 1px solid var(--dim); padding-left: 0; padding-top: 32px; margin-top: 32px; }
+  .exploit-header { grid-template-columns: 1fr; gap: 24px; }
+  .exploit-cards { grid-template-columns: 1fr; }
+  .skills-layout { grid-template-columns: 1fr; gap: 40px; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .profiles-grid { grid-template-columns: 1fr 1fr; }
+  #contact { grid-template-columns: 1fr; }
+  .contact-left { border-right: none; border-bottom: 1px solid var(--dim); }
+  footer { flex-direction: column; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<div id="edit-strip">✦ Click any text to edit it directly</div>
+
+<nav>
+  <span class="logo">BHASHMA_</span>
+  <ul class="nav-right">
+    <li><a href="#writeups">Writeups</a></li>
+    <li><a href="#exploit">Exploit Dev</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#profiles">Profiles</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-eyebrow" contenteditable="true">Offensive Security Researcher</div>
+      <h1>
+        Amrit<br>
+        Aryal
+        <span class="accent">BHASHMA</span>
+      </h1>
+    </div>
+
+    <div class="hero-right">
+      <p class="hero-bio" contenteditable="true">
+        I break enterprise networks, document every step, and build tools that make defenders sweat.
+        Specialised in <strong>Active Directory attack chains</strong>, <strong>red team operations</strong>,
+        and <strong>low-level exploit development</strong> on Windows.
+      </p>
+
+      <div class="hero-certs">
+        <div class="cert-pill">
+          <div class="dot"></div>
+          <span>OSCP — Offensive Security</span>
+          <a href="https://www.credential.net/profile/amritaryal814303/wallet" target="_blank">↗ verify</a>
+        </div>
+        <div class="cert-pill">
+          <div class="dot" style="background:#c8860a"></div>
+          <span contenteditable="true">HackTheBox — Pro Hacker Rank</span>
+        </div>
+        <div class="cert-pill">
+          <div class="dot" style="background:#7a7aff"></div>
+          <span contenteditable="true">TryHackMe — Top X%</span>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#writeups">Read Writeups</a>
+        <a class="btn btn-ghost" href="#contact">Hire Me</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker">
+    <div class="ticker-track" id="ticker">
+      <span class="ticker-item">Active Directory<span class="sep">✦</span></span>
+      <span class="ticker-item">Kerberos Delegation Abuse<span class="sep">✦</span></span>
+      <span class="ticker-item">SEH Overflows<span class="sep">✦</span></span>
+      <span class="ticker-item">Red Team Operations<span class="sep">✦</span></span>
+      <span class="ticker-item">Buffer Overflows<span class="sep">✦</span></span>
+      <span class="ticker-item">RBCD Attacks<span class="sep">✦</span></span>
+      <span class="ticker-item">DCSync<span class="sep">✦</span></span>
+      <span class="ticker-item">BloodHound<span class="sep">✦</span></span>
+      <span class="ticker-item">Malware Development<span class="sep">✦</span></span>
+      <span class="ticker-item">VulnLabs<span class="sep">✦</span></span>
+      <span class="ticker-item">HackTheBox Pro Labs<span class="sep">✦</span></span>
+      <span class="ticker-item">OSCP Certified<span class="sep">✦</span></span>
+      <span class="ticker-item">Active Directory<span class="sep">✦</span></span>
+      <span class="ticker-item">Kerberos Delegation Abuse<span class="sep">✦</span></span>
+      <span class="ticker-item">SEH Overflows<span class="sep">✦</span></span>
+      <span class="ticker-item">Red Team Operations<span class="sep">✦</span></span>
+      <span class="ticker-item">Buffer Overflows<span class="sep">✦</span></span>
+      <span class="ticker-item">RBCD Attacks<span class="sep">✦</span></span>
+      <span class="ticker-item">DCSync<span class="sep">✦</span></span>
+      <span class="ticker-item">BloodHound<span class="sep">✦</span></span>
+      <span class="ticker-item">Malware Development<span class="sep">✦</span></span>
+      <span class="ticker-item">VulnLabs<span class="sep">✦</span></span>
+      <span class="ticker-item">HackTheBox Pro Labs<span class="sep">✦</span></span>
+      <span class="ticker-item">OSCP Certified<span class="sep">✦</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ WRITEUPS ═══ -->
+<section id="writeups">
+  <div class="section-label">01 — Operations Log</div>
+  <h2>Writeups &<br><span style="color:var(--green)">Walkthroughs</span></h2>
+
+  <table class="ops-table" style="margin-top:64px">
+    <thead>
+      <tr>
+        <th style="width:56px">#</th>
+        <th>Target</th>
+        <th style="width:140px">Platform</th>
+        <th style="text-align:right;width:200px">Techniques</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/pro_labs/klendathu_/klendathu_.md','_blank')">
+        <td><span class="ops-id">001</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">KLENDATHU</div>
+          <div class="ops-desc" contenteditable="true">HTB Pro Lab — multi-host AD network, full chain from initial foothold to DA</div>
+        </td>
+        <td><span class="ops-platform pro">HTB Pro Lab</span></td>
+        <td><div class="ops-tags"><span class="tag" contenteditable="true">AD</span><span class="tag" contenteditable="true">pivoting</span><span class="tag" contenteditable="true">lateral-movement</span></div></td>
+      </tr>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/pro_labs/poo/p.o.o.md','_blank')">
+        <td><span class="ops-id">002</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">P.O.O</div>
+          <div class="ops-desc" contenteditable="true">Penetration testing oriented operations — enterprise multi-machine network</div>
+        </td>
+        <td><span class="ops-platform pro">HTB Pro Lab</span></td>
+        <td><div class="ops-tags"><span class="tag">enterprise</span><span class="tag">windows</span><span class="tag">priv-esc</span></div></td>
+      </tr>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/tengu_/_tengu.md','_blank')">
+        <td><span class="ops-id">003</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">TENGU</div>
+          <div class="ops-desc" contenteditable="true">VulnLabs — complex domain trust abuse, advanced AD privilege escalation paths</div>
+        </td>
+        <td><span class="ops-platform vl">VulnLabs</span></td>
+        <td><div class="ops-tags"><span class="tag">trust-abuse</span><span class="tag">AD</span><span class="tag">advanced</span></div></td>
+      </tr>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/delegate_x/_delegate.md','_blank')">
+        <td><span class="ops-id">004</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">DELEGATE X</div>
+          <div class="ops-desc" contenteditable="true">Kerberos delegation — constrained, unconstrained, and RBCD full attack chain</div>
+        </td>
+        <td><span class="ops-platform vl">VulnLabs</span></td>
+        <td><div class="ops-tags"><span class="tag">kerberos</span><span class="tag">RBCD</span><span class="tag">delegation</span></div></td>
+      </tr>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/lustrous_2_x/lustrous_2.md','_blank')">
+        <td><span class="ops-id">005</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">LUSTROUS 2</div>
+          <div class="ops-desc" contenteditable="true">Escalated difficulty AD scenario — hard-tier VulnLabs environment</div>
+        </td>
+        <td><span class="ops-platform vl">VulnLabs</span></td>
+        <td><div class="ops-tags"><span class="tag">AD</span><span class="tag">hard</span><span class="tag">domain</span></div></td>
+      </tr>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/breach/breach_.md','_blank')">
+        <td><span class="ops-id">006</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">BREACH</div>
+          <div class="ops-desc" contenteditable="true">Full AD compromise — initial access through DA via NTLM relay chain</div>
+        </td>
+        <td><span class="ops-platform vl">VulnLabs</span></td>
+        <td><div class="ops-tags"><span class="tag">NTLM</span><span class="tag">relay</span><span class="tag">AD</span></div></td>
+      </tr>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/heron_/heron.md','_blank')">
+        <td><span class="ops-id">007</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">HERON</div>
+          <div class="ops-desc" contenteditable="true">VulnLabs network — lateral movement across segmented enterprise environment</div>
+        </td>
+        <td><span class="ops-platform vl">VulnLabs</span></td>
+        <td><div class="ops-tags"><span class="tag">lateral-movement</span><span class="tag">pivoting</span></div></td>
+      </tr>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/sendai/_sendai.md','_blank')">
+        <td><span class="ops-id">008</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">SENDAI</div>
+          <div class="ops-desc" contenteditable="true">VulnLabs — Active Directory environment full compromise walkthrough</div>
+        </td>
+        <td><span class="ops-platform vl">VulnLabs</span></td>
+        <td><div class="ops-tags"><span class="tag">AD</span><span class="tag">windows</span></div></td>
+      </tr>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/hack_the_box/dark_corp/dark_corp.md','_blank')">
+        <td><span class="ops-id">009</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">DARK CORP</div>
+          <div class="ops-desc" contenteditable="true">Custom rockyou wordlist generation + exploitation chain</div>
+        </td>
+        <td><span class="ops-platform htb">HTB Machine</span></td>
+        <td><div class="ops-tags"><span class="tag">password-attacks</span><span class="tag">custom-wordlist</span></div></td>
+      </tr>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/hack_the_box/dark_zero/darkzero.htb.md','_blank')">
+        <td><span class="ops-id">010</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">DARK ZERO</div>
+          <div class="ops-desc" contenteditable="true">Full chain — recon to root on DarkZero.htb</div>
+        </td>
+        <td><span class="ops-platform htb">HTB Machine</span></td>
+        <td><div class="ops-tags"><span class="tag">priv-esc</span><span class="tag">windows</span></div></td>
+      </tr>
+
+      <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/ad_attacks/rbcd-attack.md','_blank')">
+        <td><span class="ops-id">REF</span></td>
+        <td>
+          <div class="ops-name" contenteditable="true">RBCD Attack — Reference</div>
+          <div class="ops-desc" contenteditable="true">Resource-Based Constrained Delegation — methodology, tooling, exploitation steps</div>
+        </td>
+        <td><span class="ops-platform ref">Reference</span></td>
+        <td><div class="ops-tags"><span class="tag">kerberos</span><span class="tag">RBCD</span></div></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div style="margin-top:32px; text-align:right;">
+    <a href="https://bhashma.gitbook.io/bhashma" target="_blank" class="btn btn-ghost" style="font-size:11px">View all notes on GitBook ↗</a>
+  </div>
+</section>
+
+<!-- ═══ EXPLOIT DEV ═══ -->
+<section id="exploit">
+  <div class="section-label">02 — Low Level</div>
+
+  <div class="exploit-header">
+    <h2>Exploit<br><span style="color:var(--green)">Development</span></h2>
+    <p class="exploit-intro" contenteditable="true">
+      Stack and SEH-based buffer overflows on Windows x86.
+      Bad character analysis, POP POP RET gadget hunting, custom shellcode encoding.
+      Full notes at <a href="https://bhashma.gitbook.io/maldev" target="_blank">bhashma.gitbook.io/maldev</a>
+    </p>
+  </div>
+
+  <div class="exploit-cards">
+
+    <a class="exploit-card" href="https://bhashma.gitbook.io/maldev/seh_overflows/disk_pulse_/disk_pulse.md" target="_blank">
+      <div class="ec-num">SEH OVERFLOW — 01</div>
+      <div class="ec-title" contenteditable="true">Disk Pulse Enterprise</div>
+      <div class="ec-version" contenteditable="true">v10.0.12 — Windows x86</div>
+      <div class="ec-desc" contenteditable="true">SEH chain overwrite via network service. POP POP RET gadget identification, nSEH jump shellcode, reverse shell delivery.</div>
+      <div class="ec-chips">
+        <span class="chip red">SEH Overflow</span>
+        <span class="chip">x86</span>
+        <span class="chip amber">Windows</span>
+        <span class="chip">Network</span>
+      </div>
+      <span class="ec-arrow">↗</span>
+    </a>
+
+    <a class="exploit-card" href="https://bhashma.gitbook.io/maldev/seh_overflows/sync_breeze_10.4.18/sync_breeze_10.4.18.md" target="_blank">
+      <div class="ec-num">SEH OVERFLOW — 02</div>
+      <div class="ec-title" contenteditable="true">Sync Breeze Enterprise</div>
+      <div class="ec-version" contenteditable="true">v10.4.18 — Windows x86</div>
+      <div class="ec-desc" contenteditable="true">SEH-based stack overflow with gadget chain. Bad character filtering, custom encoder to bypass AV, reverse shell via msfvenom.</div>
+      <div class="ec-chips">
+        <span class="chip red">SEH Overflow</span>
+        <span class="chip">ROP Gadgets</span>
+        <span class="chip amber">AV Bypass</span>
+      </div>
+      <span class="ec-arrow">↗</span>
+    </a>
+
+    <a class="exploit-card" href="https://bhashma.gitbook.io/maldev/stack_overflows/gatekeeper_/gate_keeper.md" target="_blank">
+      <div class="ec-num">STACK OVERFLOW — 01</div>
+      <div class="ec-title" contenteditable="true">GateKeeper</div>
+      <div class="ec-version" contenteditable="true">TryHackMe — Windows x86</div>
+      <div class="ec-desc" contenteditable="true">Classic EIP control via stack overflow. Offset calculation with pattern_create, JMP ESP instruction, shellcode delivery and execution.</div>
+      <div class="ec-chips">
+        <span class="chip red">Stack BoF</span>
+        <span class="chip">EIP Control</span>
+        <span class="chip">Shellcode</span>
+      </div>
+      <span class="ec-arrow">↗</span>
+    </a>
+
+    <a class="exploit-card" href="https://bhashma.gitbook.io/maldev/stack_overflows/sync_breeze_10.0.28/sync-breeze-10.0.28.md" target="_blank">
+      <div class="ec-num">STACK OVERFLOW — 02</div>
+      <div class="ec-title" contenteditable="true">Sync Breeze Enterprise</div>
+      <div class="ec-version" contenteditable="true">v10.0.28 — Windows x86</div>
+      <div class="ec-desc" contenteditable="true">Remote network service stack overflow. Fuzzing, offset calculation, return address overwrite, reverse shell execution.</div>
+      <div class="ec-chips">
+        <span class="chip red">Stack BoF</span>
+        <span class="chip">Remote</span>
+        <span class="chip amber">Network Service</span>
+      </div>
+      <span class="ec-arrow">↗</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills">
+  <div class="section-label">03 — Arsenal</div>
+  <h2>Skills &<br><span style="color:var(--green)">Tooling</span></h2>
+
+  <div class="skills-layout">
+    <div class="skills-context">
+      <p contenteditable="true">My work lives at the intersection of Windows internals, Active Directory architecture, and exploit development.</p>
+      <p contenteditable="true">I study attack paths the way engineers study systems — understanding not just the how, but the why behind every vulnerability.</p>
+      <p contenteditable="true" style="color:#444">Update these items by clicking directly on them.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="sg-title">Active Directory</div>
+        <ul class="sg-items">
+          <li contenteditable="true">Kerberoasting / AS-REP Roasting</li>
+          <li contenteditable="true">RBCD — Resource-Based Constrained Delegation</li>
+          <li contenteditable="true">Silver / Golden Ticket Forgery</li>
+          <li contenteditable="true">ACL Abuse — GenericAll, WriteDACL</li>
+          <li contenteditable="true">DCSync / Pass-the-Hash / Pass-the-Ticket</li>
+          <li contenteditable="true">Forest & Domain Trust Abuse</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <div class="sg-title">Exploit Development</div>
+        <ul class="sg-items">
+          <li contenteditable="true">Stack Buffer Overflows — x86 / x64</li>
+          <li contenteditable="true">SEH-Based Overflows</li>
+          <li contenteditable="true">Bad Character Analysis</li>
+          <li contenteditable="true">ROP / JMP ESP Gadget Chaining</li>
+          <li contenteditable="true">Shellcode Writing & Encoding</li>
+          <li contenteditable="true">WinDBG / Immunity Debugger</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <div class="sg-title">Red Team Ops</div>
+        <ul class="sg-items">
+          <li contenteditable="true">C2 Frameworks — Sliver, Cobalt Strike</li>
+          <li contenteditable="true">OPSEC-Aware Lateral Movement</li>
+          <li contenteditable="true">AV / EDR Evasion</li>
+          <li contenteditable="true">Network Pivoting & Tunneling</li>
+          <li contenteditable="true">BloodHound / SharpHound</li>
+          <li contenteditable="true">Mimikatz / Rubeus / Impacket</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <div class="sg-title">Languages & Tools</div>
+        <ul class="sg-items">
+          <li contenteditable="true">Python — tooling & automation</li>
+          <li contenteditable="true">C / C++ — exploit dev & maldev</li>
+          <li contenteditable="true">PowerShell — post-exploitation</li>
+          <li contenteditable="true">Bash — recon & automation</li>
+          <li contenteditable="true">Nmap, Burp Suite, Metasploit</li>
+          <li contenteditable="true">Windows Internals & WinAPI</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROFILES ═══ -->
+<section id="profiles" style="padding-bottom:0;">
+  <div class="section-label">04 — Find Me</div>
+  <h2>Online<br><span style="color:var(--green)">Profiles</span></h2>
+
+  <div class="profiles-grid">
+    <a class="profile-card" href="https://app.hackthebox.com/public/users/898227" target="_blank">
+      <div class="pc-platform">HackTheBox</div>
+      <div class="pc-handle" contenteditable="true">@bhashma</div>
+      <div class="pc-sub" contenteditable="true">Pro Hacker rank. Active Directory labs, Pro Labs, machines.</div>
+      <div class="pc-link">View Profile ↗</div>
+    </a>
+
+    <a class="profile-card" href="https://tryhackme.com/p/alpha0m3ga" target="_blank">
+      <div class="pc-platform">TryHackMe</div>
+      <div class="pc-handle" contenteditable="true">@alpha0m3ga</div>
+      <div class="pc-sub" contenteditable="true">Active learner. Rooms, paths, and ranked challenges.</div>
+      <div class="pc-link">View Profile ↗</div>
+    </a>
+
+    <a class="profile-card" href="https://bhashma.gitbook.io/bhashma" target="_blank">
+      <div class="pc-platform">GitBook — Red Team Notes</div>
+      <div class="pc-handle">bhashma.gitbook.io</div>
+      <div class="pc-sub">HTB, VulnLabs, AD attack reference notes.</div>
+      <div class="pc-link">Read Notes ↗</div>
+    </a>
+
+    <a class="profile-card" href="https://bhashma.gitbook.io/maldev" target="_blank">
+      <div class="pc-platform">GitBook — Maldev / Exploit Dev</div>
+      <div class="pc-handle">bhashma.gitbook.io/maldev</div>
+      <div class="pc-sub">Stack BoF, SEH overflows, shellcode development.</div>
+      <div class="pc-link">Read Notes ↗</div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="contact-left">
+    <div>
+      <div class="section-label">05 — Contact</div>
+      <div class="contact-cta">Open to<br>the right<br><span class="g">opportunity.</span></div>
+      <p class="contact-sub" contenteditable="true">Red team roles, security research, collaborations. If you're doing serious offensive work, let's talk.</p>
+      <a class="contact-email" href="mailto:your@email.com" contenteditable="true">your@email.com</a>
+    </div>
+  </div>
+
+  <div class="contact-right">
+    <div class="contact-links">
+      <a class="contact-link-row" href="https://www.credential.net/profile/amritaryal814303/wallet" target="_blank">
+        <div>
+          <div class="clr-label">OSCP Certificate</div>
+          <div class="clr-sub">credential.net — Offensive Security</div>
+        </div>
+        <span class="clr-arrow">↗</span>
+      </a>
+      <a class="contact-link-row" href="https://app.hackthebox.com/public/users/898227" target="_blank">
+        <div>
+          <div class="clr-label">HackTheBox Profile</div>
+          <div class="clr-sub">app.hackthebox.com</div>
+        </div>
+        <span class="clr-arrow">↗</span>
+      </a>
+      <a class="contact-link-row" href="https://tryhackme.com/p/alpha0m3ga" target="_blank">
+        <div>
+          <div class="clr-label">TryHackMe Profile</div>
+          <div class="clr-sub">tryhackme.com/p/alpha0m3ga</div>
+        </div>
+        <span class="clr-arrow">↗</span>
+      </a>
+      <a class="contact-link-row" href="https://bhashma.gitbook.io/bhashma" target="_blank">
+        <div>
+          <div class="clr-label">Red Team Notes</div>
+          <div class="clr-sub">bhashma.gitbook.io/bhashma</div>
+        </div>
+        <span class="clr-arrow">↗</span>
+      </a>
+      <a class="contact-link-row" href="https://bhashma.gitbook.io/maldev" target="_blank">
+        <div>
+          <div class="clr-label">Exploit Dev Notes</div>
+          <div class="clr-sub">bhashma.gitbook.io/maldev</div>
+        </div>
+        <span class="clr-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">BHASHMA_ / Amrit Aryal / <span contenteditable="true">2025</span></span>
+  <span class="footer-loc" contenteditable="true">Kathmandu, Nepal</span>
+</footer>
+
+</body>
+</html>
