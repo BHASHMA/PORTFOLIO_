@@ -685,7 +685,7 @@ footer {
 }
 
 /* ── EDITABLE ── */
-[contenteditable="true"]:focus {
+[contenteditable="false"]:focus {
   outline: 1px dashed rgba(200,245,66,0.4);
   outline-offset: 3px;
 }
@@ -711,7 +711,6 @@ footer {
 </head>
 <body>
 
-<div id="edit-strip">✦ Click any text to edit it directly</div>
 
 <nav>
   <span class="logo">alpha0mega</span>
@@ -728,7 +727,7 @@ footer {
 <div class="hero">
   <div class="hero-grid">
     <div class="hero-left">
-      <div class="hero-eyebrow" contenteditable="true">Offensive Security Researcher</div>
+      <div class="hero-eyebrow" contenteditable="false">Offensive Security Researcher</div>
       <h1>
         Amrit<br>
         Aryal
@@ -737,7 +736,7 @@ footer {
     </div>
 
     <div class="hero-right">
-      <p class="hero-bio" contenteditable="true">
+      <p class="hero-bio" contenteditable="false">
         I break enterprise networks, document every step, and build tools that make defenders sweat.
         Specialised in <strong>Active Directory attack chains</strong>, <strong>red team operations</strong>,
         and <strong>low-level exploit development</strong> on Windows.
@@ -751,11 +750,11 @@ footer {
         </div>
         <div class="cert-pill">
           <div class="dot" style="background:#c8860a"></div>
-          <span contenteditable="true">HackTheBox — Hacker Rank</span>
+          <span contenteditable="false">HackTheBox — Hacker Rank</span>
         </div>
         <div class="cert-pill">
           <div class="dot" style="background:#7a7aff"></div>
-          <span contenteditable="true">TryHackMe — Top 1%</span>
+          <span contenteditable="false">TryHackMe — Top 1%</span>
         </div>
       </div>
 
@@ -817,18 +816,18 @@ footer {
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/pro_labs/klendathu_/klendathu_','_blank')">
         <td><span class="ops-id">001</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">KLENDATHU</div>
-          <div class="ops-desc" contenteditable="true">HTB Pro Lab — multi-host AD network, full chain from initial foothold to DA</div>
+          <div class="ops-name" contenteditable="false">KLENDATHU</div>
+          <div class="ops-desc" contenteditable="false">HTB Pro Lab — multi-host AD network, full chain from initial foothold to DA</div>
         </td>
         <td><span class="ops-platform pro">HTB Pro Lab</span></td>
-        <td><div class="ops-tags"><span class="tag" contenteditable="true">AD</span><span class="tag" contenteditable="true">pivoting</span><span class="tag" contenteditable="true">lateral-movement</span></div></td>
+        <td><div class="ops-tags"><span class="tag" contenteditable="false">AD</span><span class="tag" contenteditable="false">pivoting</span><span class="tag" contenteditable="false">lateral-movement</span></div></td>
       </tr>
 
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/pro_labs/poo/p.o.o','_blank')">
         <td><span class="ops-id">002</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">P.O.O</div>
-          <div class="ops-desc" contenteditable="true">Penetration testing oriented operations — enterprise multi-machine network</div>
+          <div class="ops-name" contenteditable="false">P.O.O</div>
+          <div class="ops-desc" contenteditable="false">Penetration testing oriented operations — enterprise multi-machine network</div>
         </td>
         <td><span class="ops-platform pro">HTB Pro Lab</span></td>
         <td><div class="ops-tags"><span class="tag">enterprise</span><span class="tag">windows</span><span class="tag">priv-esc</span></div></td>
@@ -837,8 +836,8 @@ footer {
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/tengu_/_tengu','_blank')">
         <td><span class="ops-id">003</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">TENGU</div>
-          <div class="ops-desc" contenteditable="true">VulnLabs — complex domain trust abuse, advanced AD privilege escalation paths</div>
+          <div class="ops-name" contenteditable="false">TENGU</div>
+          <div class="ops-desc" contenteditable="false">VulnLabs — complex domain trust abuse, advanced AD privilege escalation paths</div>
         </td>
         <td><span class="ops-platform vl">VulnLabs</span></td>
         <td><div class="ops-tags"><span class="tag">trust-abuse</span><span class="tag">AD</span><span class="tag">advanced</span></div></td>
@@ -847,8 +846,8 @@ footer {
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/delegate_x/_delegate','_blank')">
         <td><span class="ops-id">004</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">DELEGATE</div>
-          <div class="ops-desc" contenteditable="true">Kerberos delegation — constrained, unconstrained, and RBCD full attack chain</div>
+          <div class="ops-name" contenteditable="false">DELEGATE</div>
+          <div class="ops-desc" contenteditable="false">Kerberos delegation — constrained, unconstrained, and RBCD full attack chain</div>
         </td>
         <td><span class="ops-platform vl">VulnLabs</span></td>
         <td><div class="ops-tags"><span class="tag">kerberos</span><span class="tag">RBCD</span><span class="tag">delegation</span></div></td>
@@ -857,8 +856,8 @@ footer {
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/reflection_/_reflection','_blank')">
         <td><span class="ops-id">005</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">REFLECTION</div>
-          <div class="ops-desc" contenteditable="true">Escalated difficulty AD scenario — hard-tier VulnLabs environment</div>
+          <div class="ops-name" contenteditable="false">REFLECTION</div>
+          <div class="ops-desc" contenteditable="false">Escalated difficulty AD scenario — hard-tier VulnLabs environment</div>
         </td>
         <td><span class="ops-platform vl">VulnLabs</span></td>
         <td><div class="ops-tags"><span class="tag">AD</span><span class="tag">hard</span><span class="tag">domain</span></div></td>
@@ -867,8 +866,8 @@ footer {
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/reflection_/_reflection','_blank')">
         <td><span class="ops-id">006</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">BREACH</div>
-          <div class="ops-desc" contenteditable="true">Full AD compromise — initial access through DA via NTLM relay chain</div>
+          <div class="ops-name" contenteditable="false">BREACH</div>
+          <div class="ops-desc" contenteditable="false">Full AD compromise — initial access through DA via NTLM relay chain</div>
         </td>
         <td><span class="ops-platform vl">VulnLabs</span></td>
         <td><div class="ops-tags"><span class="tag">NTLM</span><span class="tag">relay</span><span class="tag">AD</span></div></td>
@@ -877,8 +876,8 @@ footer {
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/heron_/heron','_blank')">
         <td><span class="ops-id">007</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">HERON</div>
-          <div class="ops-desc" contenteditable="true">VulnLabs network — lateral movement across segmented enterprise environment</div>
+          <div class="ops-name" contenteditable="false">HERON</div>
+          <div class="ops-desc" contenteditable="false">VulnLabs network — lateral movement across segmented enterprise environment</div>
         </td>
         <td><span class="ops-platform vl">VulnLabs</span></td>
         <td><div class="ops-tags"><span class="tag">lateral-movement</span><span class="tag">pivoting</span></div></td>
@@ -887,8 +886,8 @@ footer {
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/sendai/_sendai','_blank')">
         <td><span class="ops-id">008</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">SENDAI</div>
-          <div class="ops-desc" contenteditable="true">VulnLabs — Active Directory environment full compromise walkthrough</div>
+          <div class="ops-name" contenteditable="false">SENDAI</div>
+          <div class="ops-desc" contenteditable="false">VulnLabs — Active Directory environment full compromise walkthrough</div>
         </td>
         <td><span class="ops-platform vl">VulnLabs</span></td>
         <td><div class="ops-tags"><span class="tag">AD</span><span class="tag">windows</span></div></td>
@@ -897,8 +896,8 @@ footer {
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/hack_the_box/dark_corp/dark_corp','_blank')">
         <td><span class="ops-id">009</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">DARK CORP</div>
-          <div class="ops-desc" contenteditable="true">Custom rockyou wordlist generation + exploitation chain</div>
+          <div class="ops-name" contenteditable="false">DARK CORP</div>
+          <div class="ops-desc" contenteditable="false">Custom rockyou wordlist generation + exploitation chain</div>
         </td>
         <td><span class="ops-platform htb">HTB Machine</span></td>
         <td><div class="ops-tags"><span class="tag">password-attacks</span><span class="tag">custom-wordlist</span></div></td>
@@ -907,8 +906,8 @@ footer {
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/hack_the_box/dark_zero/darkzero.htb','_blank')">
         <td><span class="ops-id">010</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">DARK ZERO</div>
-          <div class="ops-desc" contenteditable="true">Full chain — recon to root on DarkZero.htb</div>
+          <div class="ops-name" contenteditable="false">DARK ZERO</div>
+          <div class="ops-desc" contenteditable="false">Full chain — recon to root on DarkZero.htb</div>
         </td>
         <td><span class="ops-platform htb">HTB Machine</span></td>
         <td><div class="ops-tags"><span class="tag">priv-esc</span><span class="tag">windows</span></div></td>
@@ -917,8 +916,8 @@ footer {
       <tr class="ops-row" onclick="window.open('https://bhashma.gitbook.io/bhashma/ad_attacks/rbcd-attack','_blank')">
         <td><span class="ops-id">REF</span></td>
         <td>
-          <div class="ops-name" contenteditable="true">RBCD Attack — Reference</div>
-          <div class="ops-desc" contenteditable="true">Resource-Based Constrained Delegation — methodology, tooling, exploitation steps</div>
+          <div class="ops-name" contenteditable="false">RBCD Attack — Reference</div>
+          <div class="ops-desc" contenteditable="false">Resource-Based Constrained Delegation — methodology, tooling, exploitation steps</div>
         </td>
         <td><span class="ops-platform ref">Reference</span></td>
         <td><div class="ops-tags"><span class="tag">kerberos</span><span class="tag">RBCD</span></div></td>
@@ -938,7 +937,7 @@ footer {
 
   <div class="exploit-header">
     <h2>Exploit<br><span style="color:var(--green)">Development</span></h2>
-    <p class="exploit-intro" contenteditable="true">
+    <p class="exploit-intro" contenteditable="false">
       Stack and SEH-based buffer overflows on Windows x86.
       Bad character analysis, POP POP RET gadget hunting, custom shellcode encoding.
       Full notes at <a href="https://bhashma.gitbook.io/maldev" target="_blank">bhashma.gitbook.io/maldev</a>
@@ -949,9 +948,9 @@ footer {
 
     <a class="exploit-card" href="https://bhashma.gitbook.io/maldev/seh_overflows/disk_pulse_/disk_pulse" target="_blank">
       <div class="ec-num">SEH OVERFLOW — 01</div>
-      <div class="ec-title" contenteditable="true">Disk Pulse Enterprise</div>
-      <div class="ec-version" contenteditable="true">v10.0.12 — Windows x86</div>
-      <div class="ec-desc" contenteditable="true">SEH chain overwrite via network service. POP POP RET gadget identification, nSEH jump shellcode, reverse shell delivery.</div>
+      <div class="ec-title" contenteditable="false">Disk Pulse Enterprise</div>
+      <div class="ec-version" contenteditable="false">v10.0.12 — Windows x86</div>
+      <div class="ec-desc" contenteditable="false">SEH chain overwrite via network service. POP POP RET gadget identification, nSEH jump shellcode, reverse shell delivery.</div>
       <div class="ec-chips">
         <span class="chip red">SEH Overflow</span>
         <span class="chip">x86</span>
@@ -963,9 +962,9 @@ footer {
 
     <a class="exploit-card" href="https://bhashma.gitbook.io/maldev/seh_overflows/sync_breeze_10.4.18/sync_breeze_10.4.18" target="_blank">
       <div class="ec-num">SEH OVERFLOW — 02</div>
-      <div class="ec-title" contenteditable="true">Sync Breeze Enterprise</div>
-      <div class="ec-version" contenteditable="true">v10.4.18 — Windows x86</div>
-      <div class="ec-desc" contenteditable="true">SEH-based stack overflow with gadget chain. Bad character filtering, custom encoder to bypass AV, reverse shell via msfvenom.</div>
+      <div class="ec-title" contenteditable="false">Sync Breeze Enterprise</div>
+      <div class="ec-version" contenteditable="false">v10.4.18 — Windows x86</div>
+      <div class="ec-desc" contenteditable="false">SEH-based stack overflow with gadget chain. Bad character filtering, custom encoder to bypass AV, reverse shell via msfvenom.</div>
       <div class="ec-chips">
         <span class="chip red">SEH Overflow</span>
         <span class="chip">ROP Gadgets</span>
@@ -976,9 +975,9 @@ footer {
 
     <a class="exploit-card" href="https://bhashma.gitbook.io/maldev/stack_overflows/gatekeeper_/gate_keeper" target="_blank">
       <div class="ec-num">STACK OVERFLOW — 01</div>
-      <div class="ec-title" contenteditable="true">GateKeeper</div>
-      <div class="ec-version" contenteditable="true">TryHackMe — Windows x86</div>
-      <div class="ec-desc" contenteditable="true">Classic EIP control via stack overflow. Offset calculation with pattern_create, JMP ESP instruction, shellcode delivery and execution.</div>
+      <div class="ec-title" contenteditable="false">GateKeeper</div>
+      <div class="ec-version" contenteditable="false">TryHackMe — Windows x86</div>
+      <div class="ec-desc" contenteditable="false">Classic EIP control via stack overflow. Offset calculation with pattern_create, JMP ESP instruction, shellcode delivery and execution.</div>
       <div class="ec-chips">
         <span class="chip red">Stack BoF</span>
         <span class="chip">EIP Control</span>
@@ -989,9 +988,9 @@ footer {
 
     <a class="exploit-card" href="https://bhashma.gitbook.io/maldev/stack_overflows/sync_breeze_10.0.28/sync-breeze-10.0.28" target="_blank">
       <div class="ec-num">STACK OVERFLOW — 02</div>
-      <div class="ec-title" contenteditable="true">Sync Breeze Enterprise</div>
-      <div class="ec-version" contenteditable="true">v10.0.28 — Windows x86</div>
-      <div class="ec-desc" contenteditable="true">Remote network service stack overflow. Fuzzing, offset calculation, return address overwrite, reverse shell execution.</div>
+      <div class="ec-title" contenteditable="false">Sync Breeze Enterprise</div>
+      <div class="ec-version" contenteditable="false">v10.0.28 — Windows x86</div>
+      <div class="ec-desc" contenteditable="false">Remote network service stack overflow. Fuzzing, offset calculation, return address overwrite, reverse shell execution.</div>
       <div class="ec-chips">
         <span class="chip red">Stack BoF</span>
         <span class="chip">Remote</span>
@@ -1010,56 +1009,56 @@ footer {
 
   <div class="skills-layout">
     <div class="skills-context">
-      <p contenteditable="true">My work lives at the intersection of Windows internals, Active Directory architecture, and exploit development.</p>
-      <p contenteditable="true">I study attack paths the way engineers study systems — understanding not just the how, but the why behind every vulnerability.</p>
-      <p contenteditable="true" style="color:#444">Update these items by clicking directly on them.</p>
+      <p contenteditable="false">My work lives at the intersection of Windows internals, Active Directory architecture, and exploit development.</p>
+      <p contenteditable="false">I study attack paths the way engineers study systems — understanding not just the how, but the why behind every vulnerability.</p>
+      <p contenteditable="false" style="color:#444">Update these items by clicking directly on them.</p>
     </div>
 
     <div class="skills-grid">
       <div class="skill-group">
         <div class="sg-title">Active Directory</div>
         <ul class="sg-items">
-          <li contenteditable="true">Kerberoasting / AS-REP Roasting</li>
-          <li contenteditable="true">RBCD — Resource-Based Constrained Delegation</li>
-          <li contenteditable="true">Silver / Golden Ticket Forgery</li>
-          <li contenteditable="true">ACL Abuse — GenericAll, WriteDACL</li>
-          <li contenteditable="true">DCSync / Pass-the-Hash / Pass-the-Ticket</li>
-          <li contenteditable="true">Forest & Domain Trust Abuse</li>
+          <li contenteditable="false">Kerberoasting / AS-REP Roasting</li>
+          <li contenteditable="false">RBCD — Resource-Based Constrained Delegation</li>
+          <li contenteditable="false">Silver / Golden Ticket Forgery</li>
+          <li contenteditable="false">ACL Abuse — GenericAll, WriteDACL</li>
+          <li contenteditable="false">DCSync / Pass-the-Hash / Pass-the-Ticket</li>
+          <li contenteditable="false">Forest & Domain Trust Abuse</li>
         </ul>
       </div>
 
       <div class="skill-group">
         <div class="sg-title">Exploit Development</div>
         <ul class="sg-items">
-          <li contenteditable="true">Stack Buffer Overflows — x86 / x64</li>
-          <li contenteditable="true">SEH-Based Overflows</li>
-          <li contenteditable="true">Bad Character Analysis</li>
-          <li contenteditable="true">ROP / JMP ESP Gadget Chaining</li>
-          <li contenteditable="true">Shellcode Writing & Encoding</li>
-          <li contenteditable="true">WinDBG / IDA / Ghidra</li>
+          <li contenteditable="false">Stack Buffer Overflows — x86 / x64</li>
+          <li contenteditable="false">SEH-Based Overflows</li>
+          <li contenteditable="false">Bad Character Analysis</li>
+          <li contenteditable="false">ROP / JMP ESP Gadget Chaining</li>
+          <li contenteditable="false">Shellcode Writing & Encoding</li>
+          <li contenteditable="false">WinDBG / IDA / Ghidra</li>
         </ul>
       </div>
 
       <div class="skill-group">
         <div class="sg-title">Red Team Ops</div>
         <ul class="sg-items">
-          <li contenteditable="true">C2 Frameworks — Sliver, Mythic</li>
-          <li contenteditable="true">AV / EDR Evasion</li>
-          <li contenteditable="true">Network Pivoting & Tunneling</li>
-          <li contenteditable="true">BloodHound / SharpHound</li>
-          <li contenteditable="true">Mimikatz / Rubeus / Impacket</li>
+          <li contenteditable="false">C2 Frameworks — Sliver, Mythic</li>
+          <li contenteditable="false">AV / EDR Evasion</li>
+          <li contenteditable="false">Network Pivoting & Tunneling</li>
+          <li contenteditable="false">BloodHound / SharpHound</li>
+          <li contenteditable="false">Mimikatz / Rubeus / Impacket</li>
         </ul>
       </div>
 
       <div class="skill-group">
         <div class="sg-title">Languages & Tools</div>
         <ul class="sg-items">
-          <li contenteditable="true">Python — tooling & automation</li>
-          <li contenteditable="true">C / C++ — exploit dev & maldev</li>
-          <li contenteditable="true">PowerShell — post-exploitation</li>
-          <li contenteditable="true">Bash — recon & automation</li>
-          <li contenteditable="true">Nmap, Burp Suite, Metasploit</li>
-          <li contenteditable="true">Windows Internals & WinAPI</li>
+          <li contenteditable="false">Python — tooling & automation</li>
+          <li contenteditable="false">C / C++ — exploit dev & maldev</li>
+          <li contenteditable="false">PowerShell — post-exploitation</li>
+          <li contenteditable="false">Bash — recon & automation</li>
+          <li contenteditable="false">Nmap, Burp Suite, Metasploit</li>
+          <li contenteditable="false">Windows Internals & WinAPI</li>
         </ul>
       </div>
     </div>
@@ -1074,22 +1073,22 @@ footer {
   <div class="profiles-grid">
     <a class="profile-card" href="https://app.hackthebox.com/public/users/898227" target="_blank">
       <div class="pc-platform">HackTheBox</div>
-      <div class="pc-handle" contenteditable="true">@alpha0m3ga</div>
-      <div class="pc-sub" contenteditable="true">Pro Hacker rank. Active Directory labs, Pro Labs, machines.</div>
+      <div class="pc-handle" contenteditable="false">@alpha0m3ga</div>
+      <div class="pc-sub" contenteditable="false">Pro Hacker rank. Active Directory labs, Pro Labs, machines.</div>
       <div class="pc-link">View Profile ↗</div>
     </a>
 
     <a class="profile-card" href="https://tryhackme.com/p/alpha0m3ga" target="_blank">
       <div class="pc-platform">TryHackMe</div>
-      <div class="pc-handle" contenteditable="true">@alpha0m3ga</div>
-      <div class="pc-sub" contenteditable="true">Active learner. Rooms, paths, and ranked challenges.</div>
+      <div class="pc-handle" contenteditable="false">@alpha0m3ga</div>
+      <div class="pc-sub" contenteditable="false">Active learner. Rooms, paths, and ranked challenges.</div>
       <div class="pc-link">View Profile ↗</div>
     </a>
 
     <a class="profile-card" href="https://portal.offsec.com/public-profile/e296e23c-2f36-11f0-9794-0ad45fbd5c7b" target="_blank">
       <div class="pc-platform">Offsec</div>
-      <div class="pc-handle" contenteditable="true">@alpha0m3ga</div>
-      <div class="pc-sub" contenteditable="true">Researcher.</div>
+      <div class="pc-handle" contenteditable="false">@alpha0m3ga</div>
+      <div class="pc-sub" contenteditable="false">Researcher.</div>
       <div class="pc-link">View Profile ↗</div>
     </a>
 
@@ -1115,8 +1114,8 @@ footer {
     <div>
       <div class="section-label">05 — Contact</div>
       <div class="contact-cta">Open to<br>the right<br><span class="g">opportunity.</span></div>
-      <p class="contact-sub" contenteditable="true">Red team roles, security research, collaborations. If you're doing serious offensive work, let's talk.</p>
-      <a class="contact-email" href="mailto:your@email.com" contenteditable="true">amritarya70@gmail.com</a>
+      <p class="contact-sub" contenteditable="false">Red team roles, security research, collaborations. If you're doing serious offensive work, let's talk.</p>
+      <a class="contact-email" href="mailto:your@email.com" contenteditable="false">amritarya70@gmail.com</a>
     </div>
   </div>
 
@@ -1169,8 +1168,8 @@ footer {
 </section>
 
 <footer>
-  <span class="footer-copy">alpha0mega / Amrit Aryal / <span contenteditable="true">2025</span></span>
-  <span class="footer-loc" contenteditable="true">Kathmandu, Nepal</span>
+  <span class="footer-copy">alpha0mega / Amrit Aryal / <span contenteditable="false">2025</span></span>
+  <span class="footer-loc" contenteditable="false">Kathmandu, Nepal</span>
 </footer>
 
 </body>
