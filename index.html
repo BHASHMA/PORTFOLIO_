@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,6 +96,14 @@ nav{
   color:var(--w3);transition:color 0.15s;text-transform:uppercase;
 }
 .nav-links a:hover{color:var(--g);}
+
+/* SCROLL PROGRESS — terminal-style load bar under the nav */
+#scroll-progress{
+  position:fixed;top:51px;left:0;height:1px;width:0%;z-index:101;
+  background:var(--g);
+  box-shadow:0 0 8px var(--g);
+  transition:width 0.08s linear,background 0.4s ease;
+}
 
 /* THEME TOGGLE — a literal bit switch: 0 / 1 */
 .theme-toggle{
@@ -280,13 +288,48 @@ html[data-theme="light"] .btn-g{color:#fff;}
 .sec-title{
   font-family:'Space Grotesk',sans-serif;font-weight:700;
   font-size:clamp(28px,3.5vw,44px);letter-spacing:-0.025em;color:var(--w);
+  position:relative;display:inline-block;cursor:none;
 }
+@media(hover:none){.sec-title{cursor:auto;}}
 .sec-title .g{color:var(--g);}
 .sec-rule{flex:1;height:1px;background:var(--line2);}
+
+/* GLITCH — RGB-split flicker on hover, hacker-movie style but brief.
+   Driven by JS-injected .glitch-layer clones (titles contain nested
+   spans, so CSS attr() content can't reproduce them faithfully). */
+.sec-title{position:relative;}
+.glitch-layer{
+  position:absolute;left:0;top:0;width:100%;height:100%;
+  pointer-events:none;overflow:hidden;mix-blend-mode:lighten;
+}
+.glitch-layer.layer-r{color:#ff2d55;clip-path:inset(0 0 55% 0);animation:glitchTop 0.35s steps(2,end) 1;}
+.glitch-layer.layer-b{color:#00e5ff;clip-path:inset(55% 0 0 0);animation:glitchBot 0.35s steps(2,end) 1;}
+@keyframes glitchTop{
+  0%{transform:translate(0,0);}
+  20%{transform:translate(-3px,1px);}
+  40%{transform:translate(3px,-1px);}
+  60%{transform:translate(-2px,0);}
+  100%{transform:translate(0,0);}
+}
+@keyframes glitchBot{
+  0%{transform:translate(0,0);}
+  20%{transform:translate(3px,-1px);}
+  40%{transform:translate(-3px,1px);}
+  60%{transform:translate(2px,0);}
+  100%{transform:translate(0,0);}
+}
 
 /* scroll reveal */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease;}
 .reveal.is-in{opacity:1;transform:translateY(0);}
+
+/* stagger children — tags, skill list items, chips */
+.stagger-child{opacity:0;transform:translateY(10px);transition:opacity 0.45s ease,transform 0.45s ease;}
+.reveal.is-in .stagger-child{opacity:1;transform:translateY(0);}
+
+/* JS-driven index stagger for repeating cards/rows — delay set inline per item */
+.idx-stagger{opacity:0;transform:translateY(12px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.idx-stagger.is-in{opacity:1;transform:translateY(0);}
 
 /* WRITEUPS — asymmetric index layout */
 .wup-list{display:flex;flex-direction:column;}
@@ -365,8 +408,9 @@ html[data-theme="light"] .btn-g{color:#fff;}
 
 /* terminal-window card */
 .ecard{
-  background:var(--bg1);display:block;transition:background 0.15s;
+  background:var(--bg1);display:block;transition:background 0.15s,transform 0.15s ease;
   position:relative;overflow:hidden;
+  transform-style:preserve-3d;will-change:transform;
 }
 .ecard:hover{background:var(--bg2);}
 .ecard:hover .ecard-prompt::after{animation:blink 0.8s step-end infinite;}
@@ -460,7 +504,8 @@ html[data-theme="light"] .btn-g{color:#fff;}
 }
 .pcard{
   background:var(--bg1);padding:24px 20px;display:block;
-  transition:background 0.15s;position:relative;overflow:hidden;
+  transition:background 0.15s,transform 0.15s ease;position:relative;overflow:hidden;
+  transform-style:preserve-3d;will-change:transform;
 }
 .pcard::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
@@ -611,6 +656,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
     </li>
   </ul>
 </nav>
+<div id="scroll-progress"></div>
 
 <!-- HERO -->
 <div class="hero">
@@ -718,7 +764,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
 
   <div class="wup-list">
 
-    <div class="wup-item" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/delegate_x/_delegate','_blank')">
+    <div class="wup-item idx-stagger" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/delegate_x/_delegate','_blank')">
       <div class="wup-num-cell"><span class="wup-num">001</span></div>
       <div class="wup-info">
         <div class="wup-target">DELEGATE</div>
@@ -731,7 +777,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
       </div>
     </div>
 
-    <div class="wup-item" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/reflection_/_reflection','_blank')">
+    <div class="wup-item idx-stagger" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/reflection_/_reflection','_blank')">
       <div class="wup-num-cell"><span class="wup-num">002</span></div>
       <div class="wup-info">
         <div class="wup-target">REFLECTION</div>
@@ -744,7 +790,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
       </div>
     </div>
 
-    <div class="wup-item" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/breach/breach_','_blank')">
+    <div class="wup-item idx-stagger" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/breach/breach_','_blank')">
       <div class="wup-num-cell"><span class="wup-num">003</span></div>
       <div class="wup-info">
         <div class="wup-target">BREACH</div>
@@ -757,7 +803,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
       </div>
     </div>
 
-    <div class="wup-item" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/heron_/heron','_blank')">
+    <div class="wup-item idx-stagger" onclick="window.open('https://bhashma.gitbook.io/bhashma/vulnlabs/heron_/heron','_blank')">
       <div class="wup-num-cell"><span class="wup-num">004</span></div>
       <div class="wup-info">
         <div class="wup-target">HERON</div>
@@ -770,7 +816,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
       </div>
     </div>
 
-    <div class="wup-item" onclick="window.open('https://bhashma.gitbook.io/bhashma/hack_the_box/dark_corp/dark_corp','_blank')">
+    <div class="wup-item idx-stagger" onclick="window.open('https://bhashma.gitbook.io/bhashma/hack_the_box/dark_corp/dark_corp','_blank')">
       <div class="wup-num-cell"><span class="wup-num">005</span></div>
       <div class="wup-info">
         <div class="wup-target">DARK CORP</div>
@@ -783,7 +829,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
       </div>
     </div>
 
-    <div class="wup-item" onclick="window.open('https://bhashma.gitbook.io/bhashma/hack_the_box/dark_zero/darkzero.htb','_blank')">
+    <div class="wup-item idx-stagger" onclick="window.open('https://bhashma.gitbook.io/bhashma/hack_the_box/dark_zero/darkzero.htb','_blank')">
       <div class="wup-num-cell"><span class="wup-num">006</span></div>
       <div class="wup-info">
         <div class="wup-target">DARK ZERO</div>
@@ -796,7 +842,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
       </div>
     </div>
 
-    <div class="wup-item" onclick="window.open('https://bhashma.gitbook.io/bhashma/ad_attacks/rbcd-attack','_blank')">
+    <div class="wup-item idx-stagger" onclick="window.open('https://bhashma.gitbook.io/bhashma/ad_attacks/rbcd-attack','_blank')">
       <div class="wup-num-cell"><span class="wup-num">ref</span></div>
       <div class="wup-info">
         <div class="wup-target">RBCD — Reference Notes</div>
@@ -833,7 +879,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
 
   <div class="exploit-grid">
 
-    <a class="ecard" href="https://bhashma.gitbook.io/maldev/seh_overflows/disk_pulse_/disk_pulse" target="_blank">
+    <a class="ecard idx-stagger" href="https://bhashma.gitbook.io/maldev/seh_overflows/disk_pulse_/disk_pulse" target="_blank">
       <div class="ecard-chrome">
         <div class="ecard-dot r"></div><div class="ecard-dot y"></div><div class="ecard-dot g"></div>
         <span class="ecard-title-bar">immunity_debugger.exe — exploit_dp.py</span>
@@ -849,7 +895,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
       </div>
     </a>
 
-    <a class="ecard" href="https://bhashma.gitbook.io/maldev/seh_overflows/sync_breeze_10.4.18/sync_breeze_10.4.18" target="_blank">
+    <a class="ecard idx-stagger" href="https://bhashma.gitbook.io/maldev/seh_overflows/sync_breeze_10.4.18/sync_breeze_10.4.18" target="_blank">
       <div class="ecard-chrome">
         <div class="ecard-dot r"></div><div class="ecard-dot y"></div><div class="ecard-dot g"></div>
         <span class="ecard-title-bar">immunity_debugger.exe — exploit_sb2.py</span>
@@ -865,7 +911,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
       </div>
     </a>
 
-    <a class="ecard" href="https://bhashma.gitbook.io/maldev/stack_overflows/gatekeeper_/gate_keeper" target="_blank">
+    <a class="ecard idx-stagger" href="https://bhashma.gitbook.io/maldev/stack_overflows/gatekeeper_/gate_keeper" target="_blank">
       <div class="ecard-chrome">
         <div class="ecard-dot r"></div><div class="ecard-dot y"></div><div class="ecard-dot g"></div>
         <span class="ecard-title-bar">immunity_debugger.exe — exploit_gk.py</span>
@@ -881,7 +927,7 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
       </div>
     </a>
 
-    <a class="ecard" href="https://bhashma.gitbook.io/maldev/stack_overflows/sync_breeze_10.0.28/sync-breeze-10.0.28" target="_blank">
+    <a class="ecard idx-stagger" href="https://bhashma.gitbook.io/maldev/stack_overflows/sync_breeze_10.0.28/sync-breeze-10.0.28" target="_blank">
       <div class="ecard-chrome">
         <div class="ecard-dot r"></div><div class="ecard-dot y"></div><div class="ecard-dot g"></div>
         <span class="ecard-title-bar">immunity_debugger.exe — exploit_sb1.py</span>
@@ -973,31 +1019,31 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
     <div class="sec-rule"></div>
   </div>
   <div class="profiles-grid">
-    <a class="pcard" href="https://app.hackthebox.com/public/users/898227" target="_blank">
+    <a class="pcard idx-stagger" href="https://app.hackthebox.com/public/users/898227" target="_blank">
       <div class="pc-plat">HackTheBox</div>
       <div class="pc-handle">@alpha0m3ga</div>
       <div class="pc-desc">Hacker rank. Machines, pro labs, AD scenarios.</div>
       <div class="pc-cta">view profile ↗</div>
     </a>
-    <a class="pcard" href="https://tryhackme.com/p/alpha0m3ga" target="_blank">
+    <a class="pcard idx-stagger" href="https://tryhackme.com/p/alpha0m3ga" target="_blank">
       <div class="pc-plat">TryHackMe</div>
       <div class="pc-handle">@alpha0m3ga</div>
       <div class="pc-desc">Top 1%.</div>
       <div class="pc-cta">view profile ↗</div>
     </a>
-    <a class="pcard" href="https://portal.offsec.com/public-profile/e296e23c-2f36-11f0-9794-0ad45fbd5c7b" target="_blank">
+    <a class="pcard idx-stagger" href="https://portal.offsec.com/public-profile/e296e23c-2f36-11f0-9794-0ad45fbd5c7b" target="_blank">
       <div class="pc-plat">OffSec</div>
       <div class="pc-handle">@alpha0mega</div>
       <div class="pc-desc">OSCP, OSED. Public researcher profile.</div>
       <div class="pc-cta">view profile ↗</div>
     </a>
-    <a class="pcard" href="https://bhashma.gitbook.io/bhashma" target="_blank">
+    <a class="pcard idx-stagger" href="https://bhashma.gitbook.io/bhashma" target="_blank">
       <div class="pc-plat">GitBook — Red Team</div>
       <div class="pc-handle">bhashma.gitbook.io</div>
       <div class="pc-desc">HTB, VulnLabs, AD attack notes.</div>
       <div class="pc-cta">read notes ↗</div>
     </a>
-    <a class="pcard" href="https://bhashma.gitbook.io/maldev" target="_blank">
+    <a class="pcard idx-stagger" href="https://bhashma.gitbook.io/maldev" target="_blank">
       <div class="pc-plat">GitBook — Exploit Dev</div>
       <div class="pc-handle">bhashma.gitbook.io/maldev</div>
       <div class="pc-desc">Stack BoF, SEH overflows, shellcode.</div>
@@ -1036,11 +1082,9 @@ a:focus-visible,button:focus-visible,.theme-toggle:focus-visible{
 // ====== THEME ======
 (function(){
   const root = document.documentElement;
-  const stored = null; // no localStorage available in this sandboxed context fallback below
   let saved;
   try { saved = window.localStorage.getItem('a0m-theme'); } catch(e) { saved = null; }
-  const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-  const initial = saved || (prefersLight ? 'light' : 'dark');
+  const initial = saved || 'light'; // light is the default on first visit
   root.setAttribute('data-theme', initial);
 
   const toggle = document.getElementById('themeToggle');
@@ -1101,7 +1145,8 @@ revealEls.forEach(el=>io.observe(el));
   const target = document.getElementById('hBootText');
   if (!boot || !target) return;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const lines = ['whoami'];
+  const lines = ['whoami', 'amrit aryal — alpha0mega'];
+  const full = lines.join(' → ');
 
   if (reducedMotion){
     target.textContent = full;
@@ -1136,6 +1181,110 @@ revealEls.forEach(el=>io.observe(el));
     });
     btn.addEventListener('mouseleave', ()=>{
       btn.style.transform = 'translate(0,0)';
+    });
+  });
+})();
+
+// ====== SCROLL PROGRESS BAR ======
+(function(){
+  const bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  function update(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (scrolled / max) * 100 : 0;
+    bar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  update();
+})();
+
+// ====== GLITCH ON TITLE HOVER ======
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.sec-title').forEach(title=>{
+    let busy = false;
+    title.addEventListener('mouseenter', ()=>{
+      if (busy) return;
+      busy = true;
+      const r = document.createElement('span');
+      r.className = 'glitch-layer layer-r';
+      r.innerHTML = title.innerHTML;
+      const b = document.createElement('span');
+      b.className = 'glitch-layer layer-b';
+      b.innerHTML = title.innerHTML;
+      title.appendChild(r);
+      title.appendChild(b);
+      setTimeout(()=>{ r.remove(); b.remove(); busy = false; }, 360);
+    });
+  });
+})();
+
+// ====== CARD TILT — subtle 3D perspective tilt toward pointer ======
+(function(){
+  if (!window.matchMedia('(hover: hover)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.ecard, .pcard').forEach(card=>{
+    card.addEventListener('mousemove', e=>{
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;   // 0..1
+      const py = (e.clientY - r.top) / r.height;   // 0..1
+      const rx = (py - 0.5) * -6;  // tilt range, kept small/tasteful
+      const ry = (px - 0.5) * 8;
+      card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+    });
+    card.addEventListener('mouseleave', ()=>{
+      card.style.transform = 'perspective(700px) rotateX(0) rotateY(0)';
+    });
+  });
+})();
+
+// ====== INDEX NUMBER COUNT-UP — writeup numbers tick up into place ======
+(function(){
+  const nums = document.querySelectorAll('.wup-num');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cio = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if (!entry.isIntersecting) return;
+      cio.unobserve(entry.target);
+      const el = entry.target;
+      const final = el.textContent.trim();
+      if (reducedMotion || !/^\d+$/.test(final)){ return; } // leave "ref" etc untouched
+      const target = parseInt(final, 10);
+      let frame = 0;
+      const totalFrames = 14;
+      function tick(){
+        frame++;
+        const val = Math.min(target, Math.floor((target * frame) / totalFrames) + Math.floor(Math.random()*3));
+        el.textContent = String(Math.min(val, target)).padStart(final.length, '0');
+        if (frame < totalFrames){ requestAnimationFrame(tick); }
+        else { el.textContent = final; }
+      }
+      requestAnimationFrame(tick);
+    });
+  }, {threshold:0.4});
+  nums.forEach(el=>cio.observe(el));
+})();
+
+// ====== INDEX STAGGER — repeating cards/rows fade in with incremental delay ======
+(function(){
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  ['.wup-list','.exploit-grid','.profiles-grid'].forEach(sel=>{
+    document.querySelectorAll(sel).forEach(container=>{
+      const items = container.querySelectorAll('.idx-stagger');
+      const sio = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if (!entry.isIntersecting) return;
+          sio.unobserve(entry.target);
+          const idx = Array.from(items).indexOf(entry.target);
+          const delay = reducedMotion ? 0 : idx * 70;
+          entry.target.style.transitionDelay = delay + 'ms';
+          entry.target.classList.add('is-in');
+        });
+      }, {threshold:0.15, rootMargin:'0px 0px -30px 0px'});
+      items.forEach(item=>sio.observe(item));
     });
   });
 })();
